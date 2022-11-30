@@ -29,10 +29,22 @@ If you run into errors, there is a few things to check before looking further:
 
 ## Using dash
 
+Have a look at the scripts starting with ```app```.
+
+```app.py```   [Tutorial](https://dash.plotly.com/layout)
+
+```app_hover.py``` [Tutorial](https://dash.plotly.com/interactive-graphing)
+
+```app_tooltip.py``` [Tutorial](https://dash.plotly.com/dash-core-components/tooltip?_gl=1*1ljxuab*_ga*Mjk4OTgyNTMuMTY2OTIyNjI0Ng..*_ga_6G7EE0JNSC*MTY2OTg0OTU4MC44LjEuMTY2OTg1MDg1MC4wLjAuMA)
+
+More Dash Tutorials can be found [here](https://medium.com/sfu-cspmp/plotly-dash-story-edbb8c3e151e).
+
+These are example scripts taken from the [Plotly Dash Guide](https://dash.plotly.com/). Try playing around with these and understanding the code, particularly of ```app_tooltip.py``` - this is pretty close to what we want to build!
+
+
 
 
 ## Links
-
 
 Have a look at the [cerebellar atlas viewer](https://www.diedrichsenlab.org/imaging/AtlasViewer/index.htm) to see an example of an interactive visualisation tool.
 
