@@ -20,13 +20,8 @@ import matplotlib as mpl
 from matplotlib.colors import ListedColormap
 from matplotlib.patches import Rectangle
 
-base_dir = '/Volumes/diedrichsen_data$/data/FunctionalFusion'
-if not Path(base_dir).exists():
-    base_dir = '/srv/diedrichsen/data/FunctionalFusion'
-if not Path(base_dir).exists():
-    base_dir = 'Y:\data\FunctionalFusion'
-if not Path(base_dir).exists():
-    pass
+
+base_dir = '.'
 
 def show_parcel_profile(p, profiles, conditions, datasets, show_ds='all', ncond=5, print=True):
     """Returns the functional profile for a given parcel either for selected dataset or all datasets
