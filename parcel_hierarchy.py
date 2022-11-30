@@ -26,7 +26,7 @@ if not Path(base_dir).exists():
 if not Path(base_dir).exists():
     base_dir = 'Y:\data\FunctionalFusion'
 if not Path(base_dir).exists():
-    raise(NameError('Could not find base_dir'))
+    pass
 
 def show_parcel_profile(p, profiles, conditions, datasets, show_ds='all', ncond=5, print=True):
     """Returns the functional profile for a given parcel either for selected dataset or all datasets
