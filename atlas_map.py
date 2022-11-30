@@ -17,7 +17,7 @@ import SUITPy as suit
 import surfAnalysisPy as surf
 import nitools as nt
 
-atlas_dir('.')
+atlas_dir = '.'
 
 def get_atlas(atlas_str,atlas_dir):
     """ returns an atlas from a code
