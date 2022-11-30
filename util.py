@@ -5,7 +5,6 @@ import pickle
 from pathlib import Path
 import Functional_Fusion.atlas_map as am
 import pandas as pd
-import torch as pt
 import matplotlib.pyplot as plt
 # import generativeMRF.evaluation as ev
 
