@@ -7,7 +7,7 @@ import Functional_Fusion.atlas_map as am
 import pandas as pd
 import torch as pt
 import matplotlib.pyplot as plt
-import generativeMRF.evaluation as ev
+# import generativeMRF.evaluation as ev
 
 base_dir = '/Volumes/diedrichsen_data$/data/FunctionalFusion'
 if not Path(base_dir).exists():
@@ -157,38 +157,38 @@ def plot_multi_flat(data,atlas,grid,
         if titles is not None: 
             plt.title(titles[i])
 
-def plot_model_parcel(model_names,grid,cmap='tab20b',align=False):
-    """  Load a bunch of model fits, selects the best from 
-    each of them and plots the flatmap of the parcellation
+# def plot_model_parcel(model_names,grid,cmap='tab20b',align=False):
+#     """  Load a bunch of model fits, selects the best from 
+#     each of them and plots the flatmap of the parcellation
 
-    Args:
-        model_names (list): List of mode names 
-        grid (tuple): (rows,cols) of matrix 
-        cmap (str / colormat): Colormap. Defaults to 'tab20b'.
-        align (bool): Align the models before plotting. Defaults to False.
-    """
-    titles = [] 
-    models = []
+#     Args:
+#         model_names (list): List of mode names 
+#         grid (tuple): (rows,cols) of matrix 
+#         cmap (str / colormat): Colormap. Defaults to 'tab20b'.
+#         align (bool): Align the models before plotting. Defaults to False.
+#     """
+#     titles = [] 
+#     models = []
 
-    # Load models and produce titles 
-    for i,mn in enumerate(model_names):
-        info,model = load_batch_best(mn)
-        models.append(model)
-        # Split the name and build titles
-        fname = mn.split('/') # Get filename if directory is given 
-        split_mn = fname[-1].split('_') 
-        atlas = split_mn[2][6:]
-        titles.append(split_mn[1] + ' ' + split_mn[3])
+#     # Load models and produce titles 
+#     for i,mn in enumerate(model_names):
+#         info,model = load_batch_best(mn)
+#         models.append(model)
+#         # Split the name and build titles
+#         fname = mn.split('/') # Get filename if directory is given 
+#         split_mn = fname[-1].split('_') 
+#         atlas = split_mn[2][6:]
+#         titles.append(split_mn[1] + ' ' + split_mn[3])
     
-    # Align models if requested 
-    if align:
-        Prob = ev.align_models(models,in_place=False)
-    else: 
-        Prob = ev.extract_marginal_prob(models)
+#     # Align models if requested 
+#     if align:
+#         Prob = ev.align_models(models,in_place=False)
+#     else: 
+#         Prob = ev.extract_marginal_prob(models)
 
-    parc = np.argmax(Prob,axis=1)+1
+#     parc = np.argmax(Prob,axis=1)+1
 
 
-    plot_multi_flat(parc,atlas,grid=grid,
-                     cmap=cmap,
-                     titles=titles) 
+#     plot_multi_flat(parc,atlas,grid=grid,
+#                      cmap=cmap,
+#                      titles=titles) 
