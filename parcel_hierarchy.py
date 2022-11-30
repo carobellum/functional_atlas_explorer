@@ -7,7 +7,6 @@ import atlas_map as am
 import nibabel as nb
 import nibabel.processing as ns
 import SUITPy as suit
-import torch as pt
 import matplotlib.pyplot as plt
 import seaborn as sb
 import sys
@@ -28,92 +27,6 @@ if not Path(base_dir).exists():
     base_dir = 'Y:\data\FunctionalFusion'
 if not Path(base_dir).exists():
     raise(NameError('Could not find base_dir'))
-
-def parcel_similarity(model,plot=False,sym=False, weighting=None):
-    n_sets = len(model.emissions)
-    if sym:
-        K = int(model.emissions[0].K/2)
-    else:
-        K = model.emissions[0].K
-    cos_sim = np.empty((n_sets,K,K))
-    if model.emissions[0].uniform_kappa:
-        kappa = np.empty((n_sets,))
-    else:
-        kappa = np.empty((n_sets,K))
-    n_subj = np.empty((n_sets,))
-
-    V = []
-    for i,em in enumerate(model.emissions):
-        if sym:
-            V.append(em.V[:,:K]+em.V[:,K:]) # Average the two sides for clustering
-            V[-1] = V[-1]/np.sqrt((V[-1]**2).sum(axis=0))
-            if model.emissions[0].uniform_kappa:
-                kappa[i] = em.kappa
-            else:
-                kappa[i] = (em.kappa[:K]+em.kappa[K:])/2
-        else:
-            V.append(em.V)
-            kappa[i] = em.kappa
-        cos_sim[i]=V[-1].T @ V[-1]
-
-        # V is weighted by Kappa and number of subjects
-        V[-1] = V[-1] * np.sqrt(kappa[i] * em.num_subj)
-        if weighting is not None:
-            V[-1] = V[-1] * np.sqrt(weighting[i])
-
-    # Combine all Vs and renormalize
-    Vall = np.vstack(V)
-    Vall = Vall/np.sqrt((Vall**2).sum(axis=0))
-    w_cos_sim = Vall.T @ Vall
-
-    # Integrated parcel similarity with kappa
-    if plot is True:
-        plt.figure()
-        grid = int(np.ceil(np.sqrt(n_sets+1)))
-        for i in range(n_sets):
-            plt.subplot(grid,grid,i+1)
-            plt.imshow(cos_sim[i,:,:],vmin=-1,vmax=1)
-            plt.title(f"Dataset {i+1}")
-        plt.subplot(grid,grid,n_sets+1)
-        plt.imshow(w_cos_sim,vmin=-1,vmax=1)
-        plt.title(f"Merged")
-
-    return w_cos_sim,cos_sim,kappa
-
-
-def get_conditions(minfo):
-    """Loads the conditions for a given dataset
-    """
-
-    datasets = minfo.datasets.strip("'[").strip("]'").split("' '")
-    types = minfo.type.strip("'[").strip("]'").split("' '")
-    sessions = minfo.sess.strip("'[").strip("]'").split("' '")
-    conditions = []
-    for i,dname in enumerate(datasets):
-        _,dinfo,dataset = get_dataset(base_dir,dname,atlas=minfo.atlas,sess=sessions[i],type=types[i])
-        condition_names = dinfo.drop_duplicates(subset=[dataset.cond_ind])
-        condition_names = condition_names[dataset.cond_name].to_list()
-        conditions.append([condition.split('  ')[0] for condition in condition_names])
-
-    return conditions
-
-# def get_profiles(model,info):
-#     """Returns the functional profile for each parcel
-#     Args:
-#         model: Loaded model
-#         info: Model info
-#     Returns:
-#         profile: V for each emission model
-#         conditions: list of condition lists for each dataset
-#     """
-#     profile = [em.V for em in model.emissions]
-#     # load the condition for each dataset
-#     conditions = get_conditions(info)
-#     # (sanity check: profile length for each dataset should match length of condition list)
-#     # for i,cond in enumerate(conditions):
-#     #     print('Profile length matching n conditions {} :{}'.format(datasets[i],len(cond)==profile[i].shape[0]))
-
-#     return profile, conditions
 
 def show_parcel_profile(p, profiles, conditions, datasets, show_ds='all', ncond=5, print=True):
     """Returns the functional profile for a given parcel either for selected dataset or all datasets
