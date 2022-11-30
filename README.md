@@ -18,6 +18,7 @@ Functional Atlas Explorer Project for Brainhack Western 2022
 
 Done! Now try running the cells in brainhack_example.ipynb and explore the plots. Try to understand what the code is doing and what you see in the plots. On Day 2, we are going to work on making integrative plots of the functional profiles of the voxels!
 
+Let me know if you ran into any errors and we will fix them together :)
 
 ## Links
 
