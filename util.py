@@ -14,59 +14,8 @@ if not Path(base_dir).exists():
 if not Path(base_dir).exists():
     base_dir = 'Y:\data\FunctionalFusion'
 if not Path(base_dir).exists():
-    raise(NameError('Could not find base_dir'))
-
-def load_batch_fit(fname):
-    """ Loads a batch of fits and extracts marginal probability maps 
-    and mean vectors
-    Args:
-        fname (str): File name
-    Returns: 
-        info: Data Frame with information 
-        models: List of models
-    """
-    wdir = base_dir + '/Models/'
-    info = pd.read_csv(wdir + fname + '.tsv',sep='\t')
-    with open(wdir + fname + '.pickle','rb') as file:
-        models = pickle.load(file)
-    return info,models
-
-def clear_batch(fname):
-    """Ensures that pickle file does not contain superflous data
-    Args:
-        fname (): filename
-    """
-    wdir = base_dir + '/Models/'
-    with open(wdir + fname + '.pickle','rb') as file:
-        models = pickle.load(file)
-    # Clear models 
-    for m in models:
-        m.clear()
-    
-    with open(wdir + fname + '.pickle','wb') as file:
-        pickle.dump(models,file)
-
-def load_batch_best(fname):
-    """ Loads a batch of model fits and selects the best one
-    Args:
-        fname (str): File name
-    """
-    info, models = load_batch_fit(fname)
-    j = info.loglik.argmax()
-    return info.iloc[j],models[j]
-
-def get_colormap_from_lut(fname=base_dir + '/Atlases/tpl-SUIT/atl-MDTB10.lut'):
-    """ Makes a color map from a *.lut file 
-    Args:
-        fname (str): Name of Lut file
-
-    Returns:
-        _type_: _description_
-    """
-    color_info = pd.read_csv(fname, sep=' ', header=None)
-    color_map = np.zeros((color_info.shape[0]+1, 3))
-    color_map = color_info.iloc[:, 1:4].to_numpy()
-    return color_map
+    pass
+    # raise(NameError('Could not find base_dir'))
 
 
 def plot_data_flat(data,atlas,
@@ -155,39 +104,3 @@ def plot_multi_flat(data,atlas,grid,
                     colorbar = (i==0) & colorbar) 
         if titles is not None: 
             plt.title(titles[i])
-
-# def plot_model_parcel(model_names,grid,cmap='tab20b',align=False):
-#     """  Load a bunch of model fits, selects the best from 
-#     each of them and plots the flatmap of the parcellation
-
-#     Args:
-#         model_names (list): List of mode names 
-#         grid (tuple): (rows,cols) of matrix 
-#         cmap (str / colormat): Colormap. Defaults to 'tab20b'.
-#         align (bool): Align the models before plotting. Defaults to False.
-#     """
-#     titles = [] 
-#     models = []
-
-#     # Load models and produce titles 
-#     for i,mn in enumerate(model_names):
-#         info,model = load_batch_best(mn)
-#         models.append(model)
-#         # Split the name and build titles
-#         fname = mn.split('/') # Get filename if directory is given 
-#         split_mn = fname[-1].split('_') 
-#         atlas = split_mn[2][6:]
-#         titles.append(split_mn[1] + ' ' + split_mn[3])
-    
-#     # Align models if requested 
-#     if align:
-#         Prob = ev.align_models(models,in_place=False)
-#     else: 
-#         Prob = ev.extract_marginal_prob(models)
-
-#     parc = np.argmax(Prob,axis=1)+1
-
-
-#     plot_multi_flat(parc,atlas,grid=grid,
-#                      cmap=cmap,
-#                      titles=titles) 
