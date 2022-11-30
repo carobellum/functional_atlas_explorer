@@ -3,14 +3,7 @@
 
 import pandas as pd
 import numpy as np
-import Functional_Fusion.atlas_map as am
-import Functional_Fusion.matrix as matrix
-from Functional_Fusion.dataset import *
-import generativeMRF.emissions as em
-import generativeMRF.arrangements as ar
-import generativeMRF.full_model as fm
-import generativeMRF.evaluation as ev
-from scipy.linalg import block_diag
+import atlas_map as am
 import nibabel as nb
 import nibabel.processing as ns
 import SUITPy as suit
@@ -104,23 +97,23 @@ def get_conditions(minfo):
 
     return conditions
 
-def get_profiles(model,info):
-    """Returns the functional profile for each parcel
-    Args:
-        model: Loaded model
-        info: Model info
-    Returns:
-        profile: V for each emission model
-        conditions: list of condition lists for each dataset
-    """
-    profile = [em.V for em in model.emissions]
-    # load the condition for each dataset
-    conditions = get_conditions(info)
-    # (sanity check: profile length for each dataset should match length of condition list)
-    # for i,cond in enumerate(conditions):
-    #     print('Profile length matching n conditions {} :{}'.format(datasets[i],len(cond)==profile[i].shape[0]))
+# def get_profiles(model,info):
+#     """Returns the functional profile for each parcel
+#     Args:
+#         model: Loaded model
+#         info: Model info
+#     Returns:
+#         profile: V for each emission model
+#         conditions: list of condition lists for each dataset
+#     """
+#     profile = [em.V for em in model.emissions]
+#     # load the condition for each dataset
+#     conditions = get_conditions(info)
+#     # (sanity check: profile length for each dataset should match length of condition list)
+#     # for i,cond in enumerate(conditions):
+#     #     print('Profile length matching n conditions {} :{}'.format(datasets[i],len(cond)==profile[i].shape[0]))
 
-    return profile, conditions
+#     return profile, conditions
 
 def show_parcel_profile(p, profiles, conditions, datasets, show_ds='all', ncond=5, print=True):
     """Returns the functional profile for a given parcel either for selected dataset or all datasets

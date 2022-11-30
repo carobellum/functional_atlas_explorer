@@ -3,7 +3,7 @@ import nibabel as nb
 import SUITPy as suit
 import pickle
 from pathlib import Path
-import Functional_Fusion.atlas_map as am
+import atlas_map as am
 import pandas as pd
 import matplotlib.pyplot as plt
 # import generativeMRF.evaluation as ev
