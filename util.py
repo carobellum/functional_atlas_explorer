@@ -14,6 +14,8 @@ if not Path(base_dir).exists():
 if not Path(base_dir).exists():
     base_dir = 'Y:\data\FunctionalFusion'
 if not Path(base_dir).exists():
+    base_dir = f'./'
+if not Path(base_dir).exists():
     pass
     # raise(NameError('Could not find base_dir'))
 
