@@ -2,6 +2,7 @@
 Functional Atlas Explorer Project for Brainhack Western 2022
 
 ## Installation
+
 1. Clone this repository.
    ```git clone https://github.com/carobellum/functional_atlas_explorer.git```
 
@@ -12,13 +13,23 @@ Functional Atlas Explorer Project for Brainhack Western 2022
    ```source env/bin/activate```
 
 4. Install the packages that we need for this project.
-   ```pip intall pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools dash ipykernel torch```
+   ```pip intall pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools ipykernel torch dash jupyter-dash```
 
 5. You might have to update your nbformat package (this might only be the case for some of you), so to be sure run ```pip install --upgrade nbformat```
 
-Done! Now try running the cells in brainhack_example.ipynb and explore the plots. Try to understand what the code is doing and what you see in the plots. On Day 2, we are going to work on making integrative plots of the functional profiles of the voxels!
+Done! Now try running the cells in the jupyter notebook ```brainhack_example.ipynb``` and explore the plots. Try to understand what the code is doing and what you see in the plots. On Day 2, we are going to work on making integrative plots of the functional profiles of the voxels!
 
 Let me know if you ran into any errors and we will fix them together :)
+
+### Troubleshooting
+If you run into errors, there is a few things to check before looking further:
+- Are you running your python code in the correct environment?
+  - Did you activate the environment for your terminal only, but your jupyter notebook is not using your environment? Depending on which code editor you use (I prefer VSCode), you will have to look in different places. For VSCode, have a look [here](https://code.visualstudio.com/docs/datascience/jupyter-notebooks).
+- Did you install all of the packages in step 4? Did you install them into the correct environment?
+
+## Using dash
+
+
 
 ## Links
 
