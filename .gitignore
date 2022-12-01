@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+dash_app.png
+flatmap_app_dropdown.py
+app_interactive_image.py

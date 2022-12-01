@@ -32,7 +32,7 @@ for l, label in enumerate(labels):
 labels_alpha = sorted(label_profile.keys())
 
 parcel = Prop.argmax(axis=0)+1
-ax = plot_data_flat(parcel,atlas,cmap = cmap,
+cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     dtype='label',
                     labels=labels,
                     render='plotly')
@@ -42,50 +42,70 @@ ax = plot_data_flat(parcel,atlas,cmap = cmap,
 #start of app
 app = Dash(__name__)
 
-region_labels = dcc.Markdown(children=[], id='chosen_region')
-dataset = dcc.Markdown(children=[], id='chosen_dataset')
+region_labels = dcc.Markdown(id='chosen_region')
+dataset = dcc.Markdown(id='chosen_dataset')
 
 
 
-app.layout = html.Div([
-    html.Div(children=[
-        html.Label('Region'),
-        dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
-    ], style={'padding': 10, 'flex': 1}),
-
-     html.Div(children=[
-        html.Label('Dataset'),
-        dcc.Dropdown(datasets, id='chosen_dataset'),
-    ], style={'padding': 10, 'flex': 1}),
-
+app.layout = html.Div([ html.Div([
+    html.H1('Functional Atlas Explorer'),
 
     html.Div([
-    dcc.Graph(id="graph-basic-2", figure=ax, clear_on_unhover=True),
-    dcc.Tooltip(id="graph-tooltip")]),
 
+        dcc.Graph(id="graph-basic-2", figure=cerebellum,
+                clear_on_unhover=False),
 
-    html.Div(id='region-conditions'),
+                dcc.Tooltip(id="graph-tooltip")])
+    ], style={'width': '49%', 'display': 'inline-block'}),
+        
+    html.Div([
+
+        html.P('Display functions for a selected region and dataset.'),
+
+        html.Div(
+        children=[
+            html.Label('Region'),
+            dcc.Dropdown(labels_alpha, id='chosen_region',
+                        value=labels_alpha[0], clearable=False),
+        ], style={'padding': 10, 'flex': 1}),
+
+        html.Div(children=[
+            html.Label('Dataset'),
+            dcc.Dropdown(datasets, id='chosen_dataset',
+                        value=datasets[0], clearable=False),
+        ], style={'padding': 10, 'flex': 1}),
+
+        html.Table([
+        html.Tr([html.Td(['1', html.Sup('st')]), html.Td(id='condition-1')]),
+            html.Tr([html.Td(['2', html.Sup('nd')]), html.Td(id='condition-2')]),
+            html.Tr([html.Td(['3', html.Sup('rd')]), html.Td(id='condition-3')]),
+        ], style={'font-size': '32px', "margin-top": "50px"})
+
+    ], style={'width': '49%', 'display': 'inline-block'}),
 
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
 
 @app.callback(
-    Output(component_id='region-conditions', component_property='children'),
+    Output(component_id='condition-1', component_property='children'),
+    Output(component_id='condition-2', component_property='children'),
+    Output(component_id='condition-3', component_property='children'),
     Input(component_id='chosen_region', component_property='value'),
     Input(component_id='chosen_dataset', component_property='value'))
 
 
 
-def print_conditions(input_value,input_value2):
-    conditions = label_profile[input_value]
-    if input_value2 == 'Mdtb':
-        return f'Conditions: {conditions[0]}'
-    if input_value2 == 'Pontine':
-        return f'Conditions: {conditions[1]}'
-    if input_value2 == 'Nishimoto':
-        return f'Conditions: {conditions[2]}'
-    if input_value2 == 'Ibc':
-        return f'Conditions: {conditions[3]}'
+def print_conditions(region,dset):
+    conditions = label_profile[region]
+    # Find which condition list is the one of the chosen dataset
+    dset_short = dset[:2]
+    match = [idx for idx, list in enumerate(conditions) if dset_short in list]
+    conditions_dset = conditions[match[0]]
+    # Now format conditions for printing
+    conditions_dset = conditions_dset[3:]
+    conditions_dset = conditions_dset.split('&')
+
+    return conditions_dset[0], conditions_dset[1], conditions_dset[2]
 
 
 
