@@ -39,16 +39,18 @@ datasets = info.datasets.strip("'[").strip("]'").split("' '")
 
 app = Dash(__name__,external_stylesheets=[dbc.themes.CYBORG])
 
+
 region_labels = dcc.Markdown(children=[], id='chosen_region')
 dataset = dcc.Markdown(children=[], id='chosen_dataset')
 
-
-
 app.layout = html.Div([
-    html.Div(children=[
-        html.Label('Region'),
-        dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
-    ], style={'padding': 10, 'flex': 1}),
+    html.Div(
+        children=[
+            html.Label('Region'),
+                dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
+            ],
+        style={'backgroundColor': colors['background'], 'textAlign': 'center',
+            'color': colors['text'], 'padding': 10, 'flex': 1}),
 
      html.Div(children=[
         html.Label('Dataset'),
@@ -56,7 +58,8 @@ app.layout = html.Div([
     ], style={'padding': 10, 'flex': 1}),
 
 
-    html.Div(id='region-conditions'),
+    html.Div(id='region-conditions', style={'backgroundColor': colors['background'], 'textAlign': 'center',
+                                            'color': colors['text'], 'padding': 10, 'flex': 1}),
 
     
 ], style={'display': 'flex', 'flex-direction': 'row'})
