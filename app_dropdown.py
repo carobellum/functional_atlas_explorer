@@ -11,6 +11,7 @@ import parcel_hierarchy as ph
 # Import Dash dependencies
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
+import dash_bootstrap_components as dbc 
 
 
 with open('data.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
@@ -36,7 +37,7 @@ labels_alpha = sorted(label_profile.keys())
 datasets = info.datasets.strip("'[").strip("]'").split("' '")
 
 
-app = Dash(__name__)
+app = Dash(__name__,external_stylesheets=[dbc.themes.CYBORG])
 
 region_labels = dcc.Markdown(children=[], id='chosen_region')
 dataset = dcc.Markdown(children=[], id='chosen_dataset')
