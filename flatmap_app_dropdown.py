@@ -11,15 +11,12 @@ import parcel_hierarchy as ph
 # Import Dash dependencies
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
-import dash_bootstrap_components as dbc 
 
 
 with open('data.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
     Prop, atlas, cmap, labels, info, profiles, conditions = pickle.load(f)
-
 # for each parcel, get the highest scoring task
 datasets = info.datasets.strip("'[").strip("]'").split("' '")
-
 # Collect parcel profile for each task
 label_profile = {}
 n_highest = 3
@@ -34,23 +31,27 @@ for l, label in enumerate(labels):
 
 labels_alpha = sorted(label_profile.keys())
 
-datasets = info.datasets.strip("'[").strip("]'").split("' '")
+parcel = Prop.argmax(axis=0)+1
+ax = plot_data_flat(parcel,atlas,cmap = cmap,
+                    dtype='label',
+                    labels=labels,
+                    render='plotly')
 
 
-app = Dash(__name__,external_stylesheets=[dbc.themes.CYBORG])
 
+#start of app
+app = Dash(__name__)
 
 region_labels = dcc.Markdown(children=[], id='chosen_region')
 dataset = dcc.Markdown(children=[], id='chosen_dataset')
 
+
+
 app.layout = html.Div([
-    html.Div(
-        children=[
-            html.Label('Region'),
-                dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
-            ],
-        style={'backgroundColor': colors['background'], 'textAlign': 'center',
-            'color': colors['text'], 'padding': 10, 'flex': 1}),
+    html.Div(children=[
+        html.Label('Region'),
+        dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
+    ], style={'padding': 10, 'flex': 1}),
 
      html.Div(children=[
         html.Label('Dataset'),
@@ -58,10 +59,13 @@ app.layout = html.Div([
     ], style={'padding': 10, 'flex': 1}),
 
 
-    html.Div(id='region-conditions', style={'backgroundColor': colors['background'], 'textAlign': 'center',
-                                            'color': colors['text'], 'padding': 10, 'flex': 1}),
+    html.Div([
+    dcc.Graph(id="graph-basic-2", figure=ax, clear_on_unhover=True),
+    dcc.Tooltip(id="graph-tooltip")]),
 
-    
+
+    html.Div(id='region-conditions'),
+
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
 
