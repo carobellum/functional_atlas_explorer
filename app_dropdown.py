@@ -36,17 +36,29 @@ labels_alpha = sorted(label_profile.keys())
 
 app = Dash(__name__)
 
-region_labels = dcc.Markdown(children=[], id='chosen_region')
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
+region_labels = dcc.Markdown(children=[], id='chosen_region', style={
+                             'backgroundColor': colors['background'], 
+                             'color': colors['text']
+                             })
 
 
 app.layout = html.Div([
-    html.Div(children=[
-        html.Label('Region'),
-        dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
-    ], style={'padding': 10, 'flex': 1}),
+    html.Div(
+        children=[
+            html.Label('Region'),
+                dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
+            ],
+        style={'backgroundColor': colors['background'], 'textAlign': 'center',
+            'color': colors['text'], 'padding': 10, 'flex': 1}),
 
 
-    html.Div(id='region-conditions'),
+    html.Div(id='region-conditions', style={'backgroundColor': colors['background'], 'textAlign': 'center',
+                                            'color': colors['text'], 'padding': 10, 'flex': 1}),
 
     
 ], style={'display': 'flex', 'flex-direction': 'row'})
