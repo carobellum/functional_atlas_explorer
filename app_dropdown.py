@@ -7,9 +7,11 @@ import pickle
 import numpy as np
 from util import *
 import parcel_hierarchy as ph
+
+# Import Dash dependencies
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
-# import nbformat
+
 
 with open('data.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
     Prop, atlas, cmap, labels, info, profiles, conditions = pickle.load(f)
@@ -31,25 +33,32 @@ for l, label in enumerate(labels):
 
 labels_alpha = sorted(label_profile.keys())
 
-children = label_profile
 
 app = Dash(__name__)
+
+region_labels = dcc.Markdown(children=[], id='chosen_region')
+
 
 app.layout = html.Div([
     html.Div(children=[
         html.Label('Region'),
-        dcc.Dropdown(labels_alpha),
+        dcc.Dropdown(labels_alpha, id='chosen_region'),
     ], style={'padding': 10, 'flex': 1}),
+
+
+    html.Div(id='region-conditions'),
 
     
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
 
 @app.callback(
-    Output(label_profile[label][0], 'children'),
-    Input(labels_alpha, 'selectedData'))
-def display_selected_data(labels_alpha):
-    return print(labels_alpha, indent=2)
+    Output(component_id='region-conditions', component_property='children'),
+    Input(component_id='chosen_region', component_property='value'))
+def print_conditions(input_value):
+    conditions = label_profile[input_value]
+    return f'Conditions: {conditions}'
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
