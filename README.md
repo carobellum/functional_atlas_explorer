@@ -13,7 +13,7 @@ Functional Atlas Explorer Project for Brainhack Western 2022
    ```source env/bin/activate```
 
 4. Install the packages that we need for this project.
-   ```pip intall pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools ipykernel torch dash jupyter-dash```
+   ```pip intall pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools ipykernel torch dash jupyter-dash dash_boostrap_components```
 
 5. You might have to update your nbformat package (this might only be the case for some of you), so to be sure run ```pip install --upgrade nbformat```
 
