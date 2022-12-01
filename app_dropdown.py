@@ -42,7 +42,7 @@ region_labels = dcc.Markdown(children=[], id='chosen_region')
 app.layout = html.Div([
     html.Div(children=[
         html.Label('Region'),
-        dcc.Dropdown(labels_alpha, id='chosen_region'),
+        dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
     ], style={'padding': 10, 'flex': 1}),
 
 
