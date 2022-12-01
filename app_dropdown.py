@@ -33,16 +33,25 @@ for l, label in enumerate(labels):
 
 labels_alpha = sorted(label_profile.keys())
 
+datasets = info.datasets.strip("'[").strip("]'").split("' '")
+
 
 app = Dash(__name__)
 
 region_labels = dcc.Markdown(children=[], id='chosen_region')
+dataset = dcc.Markdown(children=[], id='chosen_dataset')
+
 
 
 app.layout = html.Div([
     html.Div(children=[
         html.Label('Region'),
         dcc.Dropdown(labels_alpha, id='chosen_region',value='A1L',clearable=False),
+    ], style={'padding': 10, 'flex': 1}),
+
+     html.Div(children=[
+        html.Label('Dataset'),
+        dcc.Dropdown(datasets, id='chosen_dataset'),
     ], style={'padding': 10, 'flex': 1}),
 
 
@@ -54,10 +63,22 @@ app.layout = html.Div([
 
 @app.callback(
     Output(component_id='region-conditions', component_property='children'),
-    Input(component_id='chosen_region', component_property='value'))
-def print_conditions(input_value):
+    Input(component_id='chosen_region', component_property='value'),
+    Input(component_id='chosen_dataset', component_property='value'))
+
+
+
+def print_conditions(input_value,input_value2):
     conditions = label_profile[input_value]
-    return f'Conditions: {conditions}'
+    if input_value2 == 'Mdtb':
+        return f'Conditions: {conditions[0]}'
+    if input_value2 == 'Pontine':
+        return f'Conditions: {conditions[1]}'
+    if input_value2 == 'Nishimoto':
+        return f'Conditions: {conditions[2]}'
+    if input_value2 == 'Ibc':
+        return f'Conditions: {conditions[3]}'
+
 
 
 if __name__ == '__main__':
