@@ -136,3 +136,6 @@ dash_test.py
 data_test.csv
 Plotly-World_Cloud.png
 >>>>>>> Stashed changes
+dash_app.png
+flatmap_app_dropdown.py
+app_interactive_image.py
