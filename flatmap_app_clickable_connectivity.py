@@ -40,6 +40,12 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     render='plotly')
 
 # Define a dictionary for mapping the regions to connectivity profiles
+# maps = np.()
+maps_leftright = np.array(['Cortex_LeftHand.png', 'Cortex_RightHand.png'])
+maps = np.repeat(maps_leftright, [len(labels_alpha) /
+          2, len(labels_alpha) / 2])
+connectivity = dict.fromkeys(labels_alpha, maps)
+
 
 
 #start of app
