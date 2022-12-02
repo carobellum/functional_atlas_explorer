@@ -39,7 +39,7 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     labels=labels,
                     render='plotly')
 
-
+# Define a dictionary for mapping the regions to connectivity profiles
 
 
 #start of app
