@@ -63,10 +63,8 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     render='plotly')
 
 #start of app
-app = Dash(__name__)
+app = Dash(__name__,external_stylesheets=[dbc.themes.LUX])
 
-# region_labels = dcc.Markdown(id='chosen_region')
-# dataset = dcc.Markdown(id='chosen_dataset')
 click_region_labels = dcc.Markdown(id='clicked-region')
 
 
@@ -115,6 +113,7 @@ app.layout = html.Div([ html.Div([
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
 def plot_wordcloud(df, dset, region):
+    # get the region name
     reg = region['points'][0]['text']
     d = df.conditions[(df.dataset == dset)& (df.label == reg)]
     wc = WordCloud (
@@ -125,9 +124,7 @@ def plot_wordcloud(df, dset, region):
     return wc.to_image()
 
 @app.callback(
-    # Output(component_id='condition-1', component_property='children'),
-    # Output(component_id='condition-2', component_property='children'),
-    # Output(component_id='condition-3', component_property='children'),
+
     Output('image_wc', 'src'), 
     # Input(component_id='figure-cerebellum', component_property='clickData'),
     Input(component_id='image_wc', component_property='src'),
