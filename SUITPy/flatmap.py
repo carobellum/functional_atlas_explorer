@@ -516,7 +516,7 @@ def plot(
         new_figure=True,
         colorbar=False,
         cbar_tick_format="%.2g",
-        backgroundcolor = 'w'
+        backgroundcolor = 'rgba(0,0,0,0)'
         ):
     """Visualize cerebellar activity on a flatmap
 

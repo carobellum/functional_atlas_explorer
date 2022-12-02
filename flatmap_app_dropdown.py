@@ -7,6 +7,7 @@ import pickle
 import numpy as np
 from util import *
 import parcel_hierarchy as ph
+import dash_bootstrap_components as dbc
 
 # Import Dash dependencies
 from dash import Dash, html, dcc
@@ -37,10 +38,9 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     labels=labels,
                     render='plotly')
 
-
-
 #start of app
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY]
+)
 
 region_labels = dcc.Markdown(id='chosen_region')
 dataset = dcc.Markdown(id='chosen_dataset')
