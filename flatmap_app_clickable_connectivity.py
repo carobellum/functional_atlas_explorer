@@ -44,11 +44,13 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
 
 # Define a dictionary for mapping the regions to connectivity profiles
 # maps = np.()
+
 map_files = np.array(['connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
                            'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
                            'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
                            'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png'])
 connectivity = dict(map(lambda i, j: (i, j), labels_alpha, map_files.tolist()))
+
 
 
 #start of app
