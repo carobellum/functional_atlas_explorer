@@ -113,8 +113,11 @@ app.layout = html.Div([ html.Div([
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
 def plot_wordcloud(df, dset, region):
-    # get the region name
-    reg = region['points'][0]['text']
+    reg = 'A1L'
+    # When initiliazing the website and if clickin on a null region, show no conditions
+    if region is not None and region['points'][0]['text'] != '0':
+        # get the region name
+        reg = region['points'][0]['text']
     d = df.conditions[(df.dataset == dset)& (df.label == reg)]
     wc = WordCloud (
                     background_color = 'white',
