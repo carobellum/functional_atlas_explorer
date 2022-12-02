@@ -48,8 +48,6 @@ maps = np.repeat(maps_leftright, [len(labels_alpha) /
 connectivity = dict(map(lambda i, j: (i, j), labels_alpha, maps.tolist()))
 
 
-
-
 #start of app
 app = Dash(__name__)
 
