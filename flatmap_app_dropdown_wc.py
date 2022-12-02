@@ -124,7 +124,7 @@ app.layout = html.Div([ html.Div([
                 dbc.Col([
                     dbc.Card([
                         dbc.CardBody([
-                            html.H5('Word Cloud',className='text-center'),
+                            # html.H5('Word Cloud',className='text-center'),
                             html.Img(id="image_wc"),
                         ])
                     ])
