@@ -32,8 +32,6 @@ for l, label in enumerate(labels):
 labels_alpha = sorted(label_profile.keys())
 
 parcel = Prop.argmax(axis=0)+1
-
-
 cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     dtype='label',
                     labels=labels,
@@ -54,7 +52,7 @@ app.layout = html.Div([ html.Div([
 
     html.Div([
 
-        dcc.Graph(id="figure-cerebellum", figure=cerebellum,
+        dcc.Graph(id="graph-basic-2", figure=cerebellum,
                 clear_on_unhover=False),
 
                 dcc.Tooltip(id="graph-tooltip")])
@@ -81,11 +79,7 @@ app.layout = html.Div([ html.Div([
         html.Tr([html.Td(['1', html.Sup('st')]), html.Td(id='condition-1')]),
             html.Tr([html.Td(['2', html.Sup('nd')]), html.Td(id='condition-2')]),
             html.Tr([html.Td(['3', html.Sup('rd')]), html.Td(id='condition-3')]),
-        ], style={'font-size': '32px', "margin-top": "50px"}),
-
-        html.Div([
-            html.H4(id='click-data'),
-        ], className='three columns'),
+        ], style={'font-size': '32px', "margin-top": "50px"})
 
     ], style={'width': '49%', 'display': 'inline-block'}),
 
@@ -98,6 +92,8 @@ app.layout = html.Div([ html.Div([
     Output(component_id='condition-3', component_property='children'),
     Input(component_id='chosen_region', component_property='value'),
     Input(component_id='chosen_dataset', component_property='value'))
+
+
 
 def print_conditions(region,dset):
     conditions = label_profile[region]
@@ -112,12 +108,6 @@ def print_conditions(region,dset):
     return conditions_dset[0], conditions_dset[1], conditions_dset[2]
 
 
-@app.callback(
-    Output('click-data', 'children'),
-    Input('figure-cerebellum', 'clickData'))
-def display_click_data(clickData):
-    clickData['points'][0]
-    return clickData
 
 if __name__ == '__main__':
     app.run_server(debug=True)
