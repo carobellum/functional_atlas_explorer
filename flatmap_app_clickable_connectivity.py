@@ -7,10 +7,13 @@ import pickle
 import numpy as np
 from util import *
 import parcel_hierarchy as ph
+import dash_bootstrap_components as dbc
+
 
 # Import Dash dependencies
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
+from PIL import Image
 
 
 with open('data.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
@@ -40,11 +43,19 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
                     render='plotly')
 
 # Define a dictionary for mapping the regions to connectivity profiles
+# maps = np.()
+
+map_files = np.array(['connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png'])
+connectivity = dict(map(lambda i, j: (i, j), labels_alpha, map_files.tolist()))
+
 
 
 #start of app
-app = Dash(__name__)
-
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY]
+           )
 # region_labels = dcc.Markdown(id='chosen_region')
 # dataset = dcc.Markdown(id='chosen_dataset')
 click_region_labels = dcc.Markdown(id='clicked-region')
@@ -79,15 +90,30 @@ app.layout = html.Div([ html.Div([
             html.Tr([html.Td(['3', html.Sup('rd')]), html.Td(id='condition-3')]),
         ], style={'font-size': '32px', "margin-top": "50px"}),
 
-        html.Div([
-            html.H4(id='clicked-region'),
-        ]),
+        # for Dash version < 2.2.0
+        html.Img(id='chosen-connectivity'),
+
 
     ], style={'width': '49%', 'display': 'inline-block'}),
 
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
+# Condition Map Updating on Click
+@app.callback(
+    Output(component_id='chosen-connectivity', component_property='src'),
+    Input(component_id='figure-cerebellum', component_property='clickData'))
+def show_connectivity(region):
+    # When initiliazing the website and if clickin on a null region, show default image
+    connectivity_image = Image.open('./Cortex_LeftHand.png')
+    if region is not None and region['points'][0]['text'] != '0':
+        label = region['points'][0]['text']
+        conn_region = connectivity[label]
+        connectivity_image = Image.open(conn_region)
 
+    return connectivity_image
+
+
+# Condition Printing on Click
 @app.callback(
     Output(component_id='condition-1', component_property='children'),
     Output(component_id='condition-2', component_property='children'),
