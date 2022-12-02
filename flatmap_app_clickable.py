@@ -95,18 +95,17 @@ app.layout = html.Div([ html.Div([
     Input(component_id='chosen_dataset', component_property='value'))
 
 def print_conditions(region,dset):
-    if region is None:
-        label = 'A1L'
-    else:
+    conditions_dset = ['', '', ''] # When initiliazing the website and if clickin on a null region, show no conditions
+    if region is not None and region['points'][0]['text'] != '0':
         label = region['points'][0]['text']
-    conditions = label_profile[label]
-    # Find which condition list is the one of the chosen dataset
-    dset_short = dset[:2]
-    match = [idx for idx, list in enumerate(conditions) if dset_short in list]
-    conditions_dset = conditions[match[0]]
-    # Now format conditions for printing
-    conditions_dset = conditions_dset[3:]
-    conditions_dset = conditions_dset.split('&')
+        conditions = label_profile[label]
+        # Find which condition list is the one of the chosen dataset
+        dset_short = dset[:2]
+        match = [idx for idx, list in enumerate(conditions) if dset_short in list]
+        conditions_dset = conditions[match[0]]
+        # Now format conditions for printing
+        conditions_dset = conditions_dset[3:]
+        conditions_dset = conditions_dset.split('&')
 
     return conditions_dset[0], conditions_dset[1], conditions_dset[2]
 
