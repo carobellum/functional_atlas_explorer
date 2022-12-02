@@ -11,6 +11,7 @@ import parcel_hierarchy as ph
 # Import Dash dependencies
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
+from PIL import Image
 
 
 with open('data.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
@@ -43,8 +44,9 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
 # maps = np.()
 maps_leftright = np.array(['Cortex_LeftHand.png', 'Cortex_RightHand.png'])
 maps = np.repeat(maps_leftright, [len(labels_alpha) /
-          2, len(labels_alpha) / 2])
-connectivity = dict.fromkeys(labels_alpha, maps)
+          2, len(labels_alpha) / 2], axis=0)
+connectivity = dict(map(lambda i, j: (i, j), labels_alpha, maps.tolist()))
+
 
 
 
@@ -85,15 +87,30 @@ app.layout = html.Div([ html.Div([
             html.Tr([html.Td(['3', html.Sup('rd')]), html.Td(id='condition-3')]),
         ], style={'font-size': '32px', "margin-top": "50px"}),
 
-        html.Div([
-            html.H4(id='clicked-region'),
-        ]),
+        # for Dash version < 2.2.0
+        html.Img(id='chosen-connectivity'),
+
 
     ], style={'width': '49%', 'display': 'inline-block'}),
 
 ], style={'display': 'flex', 'flex-direction': 'row'})
 
+# Condition Map Updating on Click
+@app.callback(
+    Output(component_id='chosen-connectivity', component_property='src'),
+    Input(component_id='figure-cerebellum', component_property='clickData'))
+def show_connectivity(region):
+    # When initiliazing the website and if clickin on a null region, show default image
+    connectivity_image = Image.open('./Cortex_LeftHand.png')
+    if region is not None and region['points'][0]['text'] != '0':
+        label = region['points'][0]['text']
+        conn_region = connectivity[label]
+        connectivity_image = Image.open(conn_region)
 
+    return connectivity_image
+
+
+# Condition Printing on Click
 @app.callback(
     Output(component_id='condition-1', component_property='children'),
     Output(component_id='condition-2', component_property='children'),
