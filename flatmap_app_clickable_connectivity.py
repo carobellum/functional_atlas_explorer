@@ -7,6 +7,8 @@ import pickle
 import numpy as np
 from util import *
 import parcel_hierarchy as ph
+import dash_bootstrap_components as dbc
+
 
 # Import Dash dependencies
 from dash import Dash, html, dcc
@@ -42,15 +44,16 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
 
 # Define a dictionary for mapping the regions to connectivity profiles
 # maps = np.()
-maps_leftright = np.array(['Cortex_LeftHand.png', 'Cortex_RightHand.png'])
-maps = np.repeat(maps_leftright, [len(labels_alpha) /
-          2, len(labels_alpha) / 2], axis=0)
-connectivity = dict(map(lambda i, j: (i, j), labels_alpha, maps.tolist()))
+map_files = np.array(['connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png', 'connectivity_images/Left_Hand.png', 'connectivity_images/Narrative.png', 'connectivity_images/Right_Hand.png', 'connectivity_images/Saccades.png', 'connectivity_images/Semantic_Knowledge.png', 'connectivity_images / Verbal_Fluency.png', \
+                           'connectivity_images/Action_Observation.png', 'connectivity_images/Active_Maintenance.png', 'connectivity_images/Autobiographic_Recall.png', 'connectivity_images/Divided_Attention.png'])
+connectivity = dict(map(lambda i, j: (i, j), labels_alpha, map_files.tolist()))
 
 
 #start of app
-app = Dash(__name__)
-
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY]
+           )
 # region_labels = dcc.Markdown(id='chosen_region')
 # dataset = dcc.Markdown(id='chosen_dataset')
 click_region_labels = dcc.Markdown(id='clicked-region')
