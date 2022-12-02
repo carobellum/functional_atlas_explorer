@@ -14,7 +14,7 @@ To run the word cloud app:
 - Click on a region in the cerebellum and the word cloud of functions will pop up.
 - Change the dataset from which you would like to see the functions displayed in the drop-down menu.
 
-![Functional_App](docs/functional_app.png)
+![Functional_App](docs/Functional_App.png)
 
 ## Exploring Connectivity
 To run the connectivity app:
@@ -23,7 +23,7 @@ To run the connectivity app:
 - Click on a region in the cerebellum and the cortical map will show cortical regions that are functionally connected to this cerebellar region.
 - The app will also display the 3 most highly activated task conditions from the cerebellar region for a chosen dataset (change the dataset in the drop-down menu).
 
-![Connectivity_App](docs/connectivity_app.png)
+![Connectivity_App](docs/Connectivity_App.png)
 
 
 ## Installation
