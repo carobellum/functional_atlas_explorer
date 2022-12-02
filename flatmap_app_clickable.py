@@ -44,8 +44,8 @@ cerebellum = plot_data_flat(parcel,atlas,cmap = cmap,
 #start of app
 app = Dash(__name__)
 
-region_labels = dcc.Markdown(id='chosen_region')
-dataset = dcc.Markdown(id='chosen_dataset')
+# region_labels = dcc.Markdown(id='chosen_region')
+# dataset = dcc.Markdown(id='chosen_dataset')
 click_region_labels = dcc.Markdown(id='clicked-region')
 
 
@@ -65,12 +65,6 @@ app.layout = html.Div([ html.Div([
 
         html.P('Display functions for a selected region and dataset.'),
 
-        html.Div(
-        children=[
-            html.Label('Region'),
-            dcc.Dropdown(labels_alpha, id='chosen_region',
-                        value=labels_alpha[0], clearable=False),
-        ], style={'padding': 10, 'flex': 1}),
 
         html.Div(children=[
             html.Label('Dataset'),
@@ -97,11 +91,15 @@ app.layout = html.Div([ html.Div([
     Output(component_id='condition-1', component_property='children'),
     Output(component_id='condition-2', component_property='children'),
     Output(component_id='condition-3', component_property='children'),
-    Input(component_id='chosen_region', component_property='value'),
+    Input(component_id='figure-cerebellum', component_property='clickData'),
     Input(component_id='chosen_dataset', component_property='value'))
 
 def print_conditions(region,dset):
-    conditions = label_profile[region]
+    if region is None:
+        label = 'A1L'
+    else:
+        label = region['points'][0]['text']
+    conditions = label_profile[label]
     # Find which condition list is the one of the chosen dataset
     dset_short = dset[:2]
     match = [idx for idx, list in enumerate(conditions) if dset_short in list]
@@ -113,13 +111,6 @@ def print_conditions(region,dset):
     return conditions_dset[0], conditions_dset[1], conditions_dset[2]
 
 
-@app.callback(
-    Output('clicked-region', 'children'),
-    Input('figure-cerebellum', 'clickData'))
-def display_click_data(clickData):
-    selected_region = clickData['points'][0]['text']
-
-    return selected_region
 
 if __name__ == '__main__':
     app.run_server(debug=True)
