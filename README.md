@@ -27,6 +27,7 @@ To run the connectivity app:
 
 
 ## Installation
+These instructions were written for the Brainhack Project Participants with little to no coding experience, hence the detailed instructions. But they still work for getting the app to run.
 
 1. Clone this repository.
    ```git clone https://github.com/carobellum/functional_atlas_explorer.git```
@@ -38,7 +39,7 @@ To run the connectivity app:
    ```source env/bin/activate```
 
 4. Install the packages that we need for this project.
-   ```pip intall pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools ipykernel torch dash jupyter-dash dash_boostrap_components```
+   ```pip install pandas numpy scipy nibabel SUITPy matplotlib seaborn pickle5 ipykernel neuroimagingtools ipykernel torch dash jupyter-dash dash_boostrap_components```
 
 5. You might have to update your nbformat package (this might only be the case for some of you), so to be sure run ```pip install --upgrade nbformat```
 
